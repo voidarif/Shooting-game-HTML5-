@@ -4,6 +4,10 @@ const scoreEl = document.querySelector('#scoreEl')
 const  startGameBtn= document.querySelector('#startGameBtn')
 const  modelEl= document.querySelector('#modelEl')
 const  bigScoreEl= document.querySelector('#bigScoreEl')
+
+//for gun sound
+const gunSound = new Audio('gun.mp3')
+const burstSound = new Audio('burst.mp3')
  
 const c=canvas.getContext('2d')
 
@@ -160,7 +164,7 @@ function spawnEnemies() {
 
 	enemies.push( new Enemy(x, y, radius, color, velocity))	
 
-	},1000)
+	},2000)
 }
 
 let animationID
@@ -213,7 +217,7 @@ function animate() {
 
 		//object touch (when projectile touch enemies)
 		if(dist - enemy.radius - projectile.radius < 1){		
-
+			burstSound.play()
 			//create explosions
 			for (let i = 0; i < enemy.radius * 2; i++) {
 				particles.push(new Particle (
@@ -260,6 +264,8 @@ function animate() {
 
 
 addEventListener('click', (event) => {
+
+	gunSound.play()
 
 	const angle = Math.atan2(event.clientY - canvas.height / 2,
 		event.clientX - canvas.width / 2
